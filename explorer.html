@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Data Explorer - Precision Editorial</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "outline": "#76777d",
+              "inverse-primary": "#bec6e0",
+              "on-tertiary-fixed": "#001f28",
+              "on-primary-fixed-variant": "#3f465c",
+              "secondary-fixed": "#d5e3fd",
+              "on-surface-variant": "#45464d",
+              "surface-bright": "#f7f9fb",
+              "surface-container": "#eceef0",
+              "error-container": "#ffdad6",
+              "secondary-fixed-dim": "#b9c7e0",
+              "on-tertiary-fixed-variant": "#004e60",
+              "on-background": "#191c1e",
+              "tertiary-fixed": "#b7eaff",
+              "on-secondary-fixed": "#0d1c2f",
+              "outline-variant": "#c6c6cd",
+              "secondary": "#515f74",
+              "tertiary": "#000000",
+              "tertiary-container": "#001f28",
+              "on-primary-fixed": "#131b2e",
+              "surface-dim": "#d8dadc",
+              "on-tertiary": "#ffffff",
+              "tertiary-fixed-dim": "#4cd6ff",
+              "on-tertiary-container": "#0090b0",
+              "surface-tint": "#565e74",
+              "inverse-on-surface": "#eff1f3",
+              "error": "#ba1a1a",
+              "primary-fixed": "#dae2fd",
+              "on-secondary": "#ffffff",
+              "on-primary": "#ffffff",
+              "on-error-container": "#93000a",
+              "background": "#f7f9fb",
+              "secondary-container": "#d5e3fd",
+              "surface-container-highest": "#e0e3e5",
+              "surface-container-low": "#f2f4f6",
+              "surface": "#f7f9fb",
+              "on-secondary-fixed-variant": "#3a485c",
+              "on-surface": "#191c1e",
+              "on-secondary-container": "#57657b",
+              "on-error": "#ffffff",
+              "surface-container-lowest": "#ffffff",
+              "primary-fixed-dim": "#bec6e0",
+              "on-primary-container": "#7c839b",
+              "primary-container": "#131b2e",
+              "surface-container-high": "#e6e8ea",
+              "surface-variant": "#e0e3e5",
+              "primary": "#000000",
+              "inverse-surface": "#2d3133"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3 { font-family: 'Manrope', sans-serif; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface selection:bg-tertiary-fixed">
+<!-- SideNavBar (Shared Component) -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-[#e6e8ea] dark:bg-slate-900 flex flex-col py-6 z-50">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 bg-tertiary rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-sm" data-icon="article">article</span>
+</div>
+<div>
+<h1 class="text-lg font-black tracking-tighter text-slate-900 dark:text-slate-100">Precision</h1>
+<p class="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Editorial Analysis</p>
+</div>
+</div>
+</div>
+<div class="px-4 mb-6">
+<button class="w-full py-3 px-4 bg-tertiary text-white rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg hover:opacity-90 transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+<span class="text-sm">New Analysis</span>
+</button>
+</div>
+<nav class="flex-1 space-y-1">
+<!-- Dashboard -->
+<a class="flex items-center gap-3 py-2.5 transition-all duration-200 ease-in-out text-slate-500 dark:text-slate-400 pl-5 hover:bg-slate-200/50 dark:hover:bg-slate-800/50" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-['Inter'] text-sm tracking-wide">Dashboard</span>
+</a>
+<!-- Data Sources -->
+<a class="flex items-center gap-3 py-2.5 transition-all duration-200 ease-in-out text-slate-500 dark:text-slate-400 pl-5 hover:bg-slate-200/50 dark:hover:bg-slate-800/50" href="#">
+<span class="material-symbols-outlined" data-icon="database">database</span>
+<span class="font-['Inter'] text-sm tracking-wide">Data Sources</span>
+</a>
+<!-- Explorer (Active) -->
+<a class="flex items-center gap-3 py-2.5 transition-all duration-200 ease-in-out border-l-4 border-black dark:border-white font-semibold text-slate-900 dark:text-slate-50 pl-4 bg-slate-200/30" href="#">
+<span class="material-symbols-outlined" data-icon="query_stats">query_stats</span>
+<span class="font-['Inter'] text-sm tracking-wide">Explorer</span>
+</a>
+<!-- Reports -->
+<a class="flex items-center gap-3 py-2.5 transition-all duration-200 ease-in-out text-slate-500 dark:text-slate-400 pl-5 hover:bg-slate-200/50 dark:hover:bg-slate-800/50" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-['Inter'] text-sm tracking-wide">Reports</span>
+</a>
+</nav>
+<div class="mt-auto px-4 space-y-1">
+<a class="flex items-center gap-3 py-2 text-slate-500 hover:text-slate-900 transition-colors pl-5" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="help_outline">help_outline</span>
+<span class="text-sm">Help</span>
+</a>
+<a class="flex items-center gap-3 py-2 text-slate-500 hover:text-slate-900 transition-colors pl-5" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="logout">logout</span>
+<span class="text-sm">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Shell -->
+<main class="ml-64 min-h-screen flex flex-col">
+<!-- TopAppBar (Shared Component) -->
+<header class="flex justify-between items-center px-8 w-full border-b border-slate-200/50 dark:border-slate-800/50 bg-[#f7f9fb] dark:bg-slate-950 h-16 sticky top-0 z-40">
+<div class="flex items-center gap-8 flex-1">
+<div class="relative w-96 group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-tertiary transition-colors" data-icon="search">search</span>
+<input class="w-full bg-surface-container border-none rounded-xl pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-tertiary/10 transition-all outline-none" placeholder="Search datasets, tables, or queries..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2">
+<button class="p-2 text-slate-500 hover:text-slate-900 transition-colors relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border-2 border-white"></span>
+</button>
+<button class="p-2 text-slate-500 hover:text-slate-900 transition-colors">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+<div class="h-8 w-[1px] bg-slate-200"></div>
+<div class="flex items-center gap-3 cursor-pointer active:opacity-70 group">
+<img alt="User profile avatar" class="w-8 h-8 rounded-full object-cover grayscale group-hover:grayscale-0 transition-all" data-alt="professional male executive portrait headshot with neutral background and soft office lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZ7owYwg-GlvawgHYvT_PY_o4BxinG-QZuQbUSFHfcNnLY9Z4jtHS3moxkDrS7WdQkNC6gd2HzlFdwZCHfZwOzZ9BAIoTz5y2AkNYgu-oFpZNgVGrzHJayxTBTWQDmgX36RJfdMTpztg7MWvLwsjiMMp4imGMcOUm79z146CVgLPXlszDp_6f99GplgFtIq4Mk11CAKDZbtlJc8k1fHpfbNku-1LiCoxR_8aC5m67PA1SyV25mGLb6GuR6zO46w5cpwDwlItzIzLc"/>
+<div class="hidden lg:block text-right">
+<p class="text-xs font-bold text-slate-900 dark:text-slate-50 leading-none">Marcus Verity</p>
+<p class="text-[10px] text-slate-500 font-medium">Chief Analyst</p>
+</div>
+</div>
+</div>
+</header>
+<!-- Workspace Canvas -->
+<div class="flex-1 flex overflow-hidden">
+<!-- Table Selection Sidebar (Panel) -->
+<aside class="w-72 bg-surface-container-low flex flex-col border-r border-outline-variant/10 overflow-hidden">
+<div class="p-6">
+<h2 class="text-xs font-bold uppercase tracking-widest text-secondary mb-4">Schema Explorer</h2>
+<div class="relative">
+<select class="w-full bg-surface-container-lowest border-none rounded-lg py-2 pl-3 pr-10 text-sm font-semibold appearance-none focus:ring-1 focus:ring-tertiary/20">
+<option>production_v2_main</option>
+<option>staging_beta</option>
+<option>archive_2023</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-sm" data-icon="unfold_more">unfold_more</span>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto no-scrollbar px-3 pb-6">
+<div class="space-y-1">
+<!-- Table Item -->
+<details class="group" open="">
+<summary class="flex items-center gap-2 p-2 rounded-lg hover:bg-surface-container-highest cursor-pointer list-none">
+<span class="material-symbols-outlined text-slate-400 group-open:rotate-90 transition-transform text-lg" data-icon="chevron_right">chevron_right</span>
+<span class="material-symbols-outlined text-tertiary text-lg" data-icon="table_chart">table_chart</span>
+<span class="text-sm font-semibold text-slate-700">editorial_metrics</span>
+</summary>
+<div class="ml-9 mt-1 space-y-1">
+<div class="flex items-center justify-between p-1.5 rounded-md hover:bg-surface-container transition-colors group/col">
+<span class="text-xs text-slate-500 font-medium">article_id</span>
+<span class="text-[10px] font-mono text-slate-400 bg-surface-container-lowest px-1.5 rounded uppercase">uuid</span>
+</div>
+<div class="flex items-center justify-between p-1.5 rounded-md hover:bg-surface-container transition-colors group/col">
+<span class="text-xs text-slate-500 font-medium">published_at</span>
+<span class="text-[10px] font-mono text-slate-400 bg-surface-container-lowest px-1.5 rounded uppercase">timestamp</span>
+</div>
+<div class="flex items-center justify-between p-1.5 rounded-md hover:bg-surface-container transition-colors group/col">
+<span class="text-xs text-slate-500 font-medium">author_rank</span>
+<span class="text-[10px] font-mono text-slate-400 bg-surface-container-lowest px-1.5 rounded uppercase">float</span>
+</div>
+<div class="flex items-center justify-between p-1.5 rounded-md hover:bg-surface-container transition-colors group/col">
+<span class="text-xs text-slate-500 font-medium">sentiment_score</span>
+<span class="text-[10px] font-mono text-slate-400 bg-surface-container-lowest px-1.5 rounded uppercase">int</span>
+</div>
+</div>
+</details>
+<details class="group">
+<summary class="flex items-center gap-2 p-2 rounded-lg hover:bg-surface-container-highest cursor-pointer list-none">
+<span class="material-symbols-outlined text-slate-400 group-open:rotate-90 transition-transform text-lg" data-icon="chevron_right">chevron_right</span>
+<span class="material-symbols-outlined text-slate-400 text-lg" data-icon="table_chart">table_chart</span>
+<span class="text-sm font-semibold text-slate-500">reader_demographics</span>
+</summary>
+</details>
+<details class="group">
+<summary class="flex items-center gap-2 p-2 rounded-lg hover:bg-surface-container-highest cursor-pointer list-none">
+<span class="material-symbols-outlined text-slate-400 group-open:rotate-90 transition-transform text-lg" data-icon="chevron_right">chevron_right</span>
+<span class="material-symbols-outlined text-slate-400 text-lg" data-icon="table_chart">table_chart</span>
+<span class="text-sm font-semibold text-slate-500">global_segments</span>
+</summary>
+</details>
+</div>
+</div>
+<div class="p-4 mt-auto border-t border-outline-variant/10">
+<div class="bg-surface-container-lowest p-3 rounded-xl">
+<p class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter mb-2">Usage Monitor</p>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-tertiary-fixed-dim" style="width: 64%;"></div>
+</div>
+<p class="text-[10px] text-slate-500 mt-2 font-medium">6.4GB / 10GB Data Processed</p>
+</div>
+</div>
+</aside>
+<!-- Workspace Center Area -->
+<div class="flex-1 flex flex-col bg-surface-container-lowest p-8 overflow-y-auto relative">
+<!-- Query Header / Title -->
+<div class="flex items-center justify-between mb-8">
+<div>
+<div class="flex items-center gap-2 text-slate-400 text-sm mb-1">
+<span>Projects</span>
+<span class="material-symbols-outlined text-xs" data-icon="chevron_right">chevron_right</span>
+<span>Editorial</span>
+</div>
+<h1 class="text-3xl font-extrabold tracking-tight text-on-surface flex items-center gap-3">
+                            Article Sentiment Trends
+                            <button class="p-1 hover:bg-surface-container rounded transition-colors">
+<span class="material-symbols-outlined text-slate-400 text-xl" data-icon="edit">edit</span>
+</button>
+</h1>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-surface-container text-slate-700 font-bold rounded-xl text-sm hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-lg" data-icon="history">history</span>
+                            Logs
+                        </button>
+<button class="flex items-center gap-2 px-6 py-2 bg-tertiary text-white font-bold rounded-xl text-sm shadow-xl active:scale-95 transition-all">
+<span class="material-symbols-outlined text-lg" data-icon="play_arrow" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+                            Run Query
+                        </button>
+</div>
+</div>
+<!-- Query Builder Area (Editorial Layout) -->
+<div class="grid grid-cols-12 gap-6 mb-8">
+<!-- Visual Query Canvas -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-low rounded-2xl p-6 relative group overflow-hidden border border-outline-variant/10">
+<div class="flex items-center justify-between mb-4">
+<div class="flex gap-4">
+<button class="text-sm font-bold text-tertiary border-b-2 border-tertiary pb-1">Visual Builder</button>
+<button class="text-sm font-medium text-slate-400 hover:text-slate-600 transition-colors">SQL Editor</button>
+</div>
+<span class="text-[10px] font-mono text-slate-400 uppercase tracking-widest">Workspace ID: PRE-0922</span>
+</div>
+<div class="space-y-6">
+<!-- Filter Step -->
+<div class="flex items-start gap-4">
+<div class="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center text-tertiary border border-outline-variant/10">
+<span class="material-symbols-outlined text-sm" data-icon="filter_alt">filter_alt</span>
+</div>
+<div class="flex-1 space-y-3">
+<p class="text-xs font-bold text-slate-400 uppercase tracking-widest pt-2">Filter Data</p>
+<div class="flex flex-wrap gap-2">
+<div class="flex items-center gap-2 bg-white px-3 py-1.5 rounded-lg border border-outline-variant/10 shadow-sm">
+<span class="text-xs font-bold">published_at</span>
+<span class="text-xs text-on-tertiary-container">is within last</span>
+<span class="text-xs font-bold">30 days</span>
+<button class="text-slate-400 hover:text-error ml-1"><span class="material-symbols-outlined text-xs" data-icon="close">close</span></button>
+</div>
+<div class="flex items-center gap-2 bg-white px-3 py-1.5 rounded-lg border border-outline-variant/10 shadow-sm">
+<span class="text-xs font-bold">author_rank</span>
+<span class="text-xs text-on-tertiary-container">&gt;</span>
+<span class="text-xs font-bold">0.85</span>
+<button class="text-slate-400 hover:text-error ml-1"><span class="material-symbols-outlined text-xs" data-icon="close">close</span></button>
+</div>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-dashed border-slate-300 text-slate-500 hover:bg-white hover:border-slate-400 transition-all">
+<span class="material-symbols-outlined text-xs" data-icon="add">add</span>
+<span class="text-xs font-bold">Add Filter</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Group Step -->
+<div class="flex items-start gap-4">
+<div class="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center text-tertiary border border-outline-variant/10">
+<span class="material-symbols-outlined text-sm" data-icon="layers">layers</span>
+</div>
+<div class="flex-1 space-y-3">
+<p class="text-xs font-bold text-slate-400 uppercase tracking-widest pt-2">Group &amp; Aggregate</p>
+<div class="flex flex-wrap gap-3">
+<div class="flex flex-col gap-1">
+<label class="text-[10px] font-bold text-slate-400">GROUP BY</label>
+<div class="bg-white px-3 py-1.5 rounded-lg border border-outline-variant/10 shadow-sm text-xs font-bold">article_category</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="text-[10px] font-bold text-slate-400">MEASURE</label>
+<div class="bg-white px-3 py-1.5 rounded-lg border border-outline-variant/10 shadow-sm text-xs font-bold">AVERAGE(sentiment_score)</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Abstract background element -->
+<div class="absolute -bottom-10 -right-10 w-40 h-40 bg-tertiary-fixed/30 rounded-full blur-3xl group-hover:bg-tertiary-fixed/50 transition-colors"></div>
+</div>
+<!-- Query Settings Panel -->
+<div class="col-span-12 lg:col-span-4 space-y-6">
+<div class="bg-white border border-outline-variant/10 rounded-2xl p-6 shadow-sm">
+<h3 class="text-sm font-bold text-slate-900 mb-4">Export Configuration</h3>
+<div class="space-y-4">
+<div>
+<label class="block text-xs font-bold text-slate-500 mb-2">FORMAT</label>
+<div class="grid grid-cols-3 gap-2">
+<button class="py-2 text-[10px] font-bold border border-tertiary bg-tertiary text-white rounded-lg">CSV</button>
+<button class="py-2 text-[10px] font-bold border border-outline-variant/30 text-slate-500 hover:border-slate-400 rounded-lg">JSON</button>
+<button class="py-2 text-[10px] font-bold border border-outline-variant/30 text-slate-500 hover:border-slate-400 rounded-lg">PARQUET</button>
+</div>
+</div>
+<div>
+<label class="block text-xs font-bold text-slate-500 mb-2">DESTINATION</label>
+<div class="flex items-center gap-3 p-3 bg-surface-container-low rounded-xl">
+<span class="material-symbols-outlined text-on-tertiary-container" data-icon="cloud_download">cloud_download</span>
+<span class="text-xs font-semibold text-slate-700">Direct Download</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-tertiary-container text-white rounded-2xl p-6 relative overflow-hidden">
+<div class="relative z-10">
+<h3 class="text-sm font-bold mb-2">Query Optimization</h3>
+<p class="text-xs text-slate-400 leading-relaxed mb-4">Your current query uses indexed columns and will execute in approximately 240ms.</p>
+<button class="text-[10px] font-bold text-tertiary-fixed-dim flex items-center gap-1 group">
+                                    View breakdown <span class="material-symbols-outlined text-xs group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<span class="material-symbols-outlined absolute -bottom-4 -right-4 text-7xl text-white/5 rotate-12" data-icon="bolt">bolt</span>
+</div>
+</div>
+</div>
+<!-- Results Section -->
+<section class="mt-4">
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-4">
+<h2 class="text-xl font-extrabold text-slate-900">Query Results</h2>
+<span class="px-2 py-0.5 bg-surface-container rounded-md text-[10px] font-bold text-slate-500 uppercase tracking-wider">1,248 rows</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 hover:bg-surface-container rounded-lg text-slate-500"><span class="material-symbols-outlined" data-icon="sort">sort</span></button>
+<button class="p-2 hover:bg-surface-container rounded-lg text-slate-500"><span class="material-symbols-outlined" data-icon="search">search</span></button>
+<button class="flex items-center gap-2 px-4 py-1.5 bg-surface-container-lowest border border-outline-variant/10 text-slate-700 font-bold rounded-lg text-xs hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="download">download</span>
+                                Export Results
+                            </button>
+</div>
+</div>
+<!-- Data Table -->
+<div class="bg-white rounded-2xl border border-outline-variant/10 overflow-hidden shadow-sm">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant/10">
+<th class="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Article UUID</th>
+<th class="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Sentiment Score</th>
+<th class="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Author Rank</th>
+<th class="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Engagement</th>
+<th class="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Timestamp</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/5">
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="px-6 py-4 text-xs font-mono text-slate-500">e82a-412d-b092</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-12 h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-tertiary-fixed-dim" style="width: 82%;"></div>
+</div>
+<span class="text-xs font-bold">0.82</span>
+</div>
+</td>
+<td class="px-6 py-4 text-xs font-medium text-slate-700">High (0.94)</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 bg-secondary-container text-on-secondary-container rounded text-[10px] font-bold uppercase">Trending</span>
+</td>
+<td class="px-6 py-4 text-xs text-slate-400">2023-11-24 14:22:01</td>
+</tr>
+<tr class="bg-surface-container-low/30 hover:bg-surface-container-lowest transition-colors group">
+<td class="px-6 py-4 text-xs font-mono text-slate-500">a910-112f-c221</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-12 h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-slate-300" style="width: 45%;"></div>
+</div>
+<span class="text-xs font-bold">0.45</span>
+</div>
+</td>
+<td class="px-6 py-4 text-xs font-medium text-slate-700">Medium (0.61)</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 bg-surface-container text-slate-400 rounded text-[10px] font-bold uppercase">Stable</span>
+</td>
+<td class="px-6 py-4 text-xs text-slate-400">2023-11-24 13:45:12</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="px-6 py-4 text-xs font-mono text-slate-500">ff44-9981-d001</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-12 h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-tertiary-fixed-dim" style="width: 91%;"></div>
+</div>
+<span class="text-xs font-bold">0.91</span>
+</div>
+</td>
+<td class="px-6 py-4 text-xs font-medium text-slate-700">Elite (0.98)</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 bg-secondary-container text-on-secondary-container rounded text-[10px] font-bold uppercase">Viral</span>
+</td>
+<td class="px-6 py-4 text-xs text-slate-400">2023-11-24 12:10:55</td>
+</tr>
+<tr class="bg-surface-container-low/30 hover:bg-surface-container-lowest transition-colors group">
+<td class="px-6 py-4 text-xs font-mono text-slate-500">b882-313e-e411</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-12 h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-error/40" style="width: 12%;"></div>
+</div>
+<span class="text-xs font-bold">0.12</span>
+</div>
+</td>
+<td class="px-6 py-4 text-xs font-medium text-slate-700">Low (0.24)</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 bg-surface-container text-slate-400 rounded text-[10px] font-bold uppercase">Stable</span>
+</td>
+<td class="px-6 py-4 text-xs text-slate-400">2023-11-24 11:32:44</td>
+</tr>
+</tbody>
+</table>
+<!-- Pagination -->
+<div class="p-4 bg-surface-container-low border-t border-outline-variant/10 flex items-center justify-between">
+<p class="text-[10px] font-bold text-slate-400 uppercase">Showing 1 to 25 of 1,248 entries</p>
+<div class="flex gap-1">
+<button class="w-8 h-8 flex items-center justify-center rounded bg-white border border-outline-variant/10 text-slate-400 hover:text-tertiary"><span class="material-symbols-outlined text-sm" data-icon="chevron_left">chevron_left</span></button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-tertiary text-white text-[10px] font-bold">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-white border border-outline-variant/10 text-[10px] font-bold text-slate-600 hover:bg-slate-50">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-white border border-outline-variant/10 text-[10px] font-bold text-slate-600 hover:bg-slate-50">3</button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-white border border-outline-variant/10 text-slate-400 hover:text-tertiary"><span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span></button>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+<!-- FAB (Suppressed on Details/Explorer as per rules, but included if needed for Dashboard only) -->
+<!-- Suppression logic applied: This is an Explorer task-focused screen, hiding FAB to prioritize content canvas -->
+</body></html>
