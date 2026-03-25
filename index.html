@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Precision Editorial | Data Analysis Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "outline": "#76777d",
+              "inverse-primary": "#bec6e0",
+              "on-tertiary-fixed": "#001f28",
+              "on-primary-fixed-variant": "#3f465c",
+              "secondary-fixed": "#d5e3fd",
+              "on-surface-variant": "#45464d",
+              "surface-bright": "#f7f9fb",
+              "surface-container": "#eceef0",
+              "error-container": "#ffdad6",
+              "secondary-fixed-dim": "#b9c7e0",
+              "on-tertiary-fixed-variant": "#004e60",
+              "on-background": "#191c1e",
+              "tertiary-fixed": "#b7eaff",
+              "on-secondary-fixed": "#0d1c2f",
+              "outline-variant": "#c6c6cd",
+              "secondary": "#515f74",
+              "tertiary": "#000000",
+              "tertiary-container": "#001f28",
+              "on-primary-fixed": "#131b2e",
+              "surface-dim": "#d8dadc",
+              "on-tertiary": "#ffffff",
+              "tertiary-fixed-dim": "#4cd6ff",
+              "on-tertiary-container": "#0090b0",
+              "surface-tint": "#565e74",
+              "inverse-on-surface": "#eff1f3",
+              "error": "#ba1a1a",
+              "primary-fixed": "#dae2fd",
+              "on-secondary": "#ffffff",
+              "on-primary": "#ffffff",
+              "on-error-container": "#93000a",
+              "background": "#f7f9fb",
+              "secondary-container": "#d5e3fd",
+              "surface-container-highest": "#e0e3e5",
+              "surface-container-low": "#f2f4f6",
+              "surface": "#f7f9fb",
+              "on-secondary-fixed-variant": "#3a485c",
+              "on-surface": "#191c1e",
+              "on-secondary-container": "#57657b",
+              "on-error": "#ffffff",
+              "surface-container-lowest": "#ffffff",
+              "primary-fixed-dim": "#bec6e0",
+              "on-primary-container": "#7c839b",
+              "primary-container": "#131b2e",
+              "surface-container-high": "#e6e8ea",
+              "surface-variant": "#e0e3e5",
+              "primary": "#000000",
+              "inverse-surface": "#2d3133"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .font-headline { font-family: 'Manrope', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface selection:bg-tertiary-fixed">
+<!-- Sidebar Navigation -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-[#e6e8ea] dark:bg-slate-900 flex flex-col py-6 z-50">
+<div class="px-8 mb-10">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-xl">insights</span>
+</div>
+<div>
+<h1 class="text-lg font-black tracking-tighter text-slate-900 dark:text-slate-100">Precision</h1>
+<p class="text-[10px] font-label uppercase tracking-[0.1em] text-on-surface-variant opacity-60">Editorial Analysis</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<!-- Active Tab: Dashboard -->
+<div class="border-l-4 border-black dark:border-white font-semibold text-slate-900 dark:text-slate-50 pl-4 py-3 flex items-center gap-3 cursor-pointer duration-200 ease-in-out">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="font-body text-sm tracking-wide">Dashboard</span>
+</div>
+<div class="text-slate-500 dark:text-slate-400 pl-5 py-3 flex items-center gap-3 cursor-pointer hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-all duration-200 ease-in-out">
+<span class="material-symbols-outlined text-[20px]">database</span>
+<span class="font-body text-sm tracking-wide">Data Sources</span>
+</div>
+<div class="text-slate-500 dark:text-slate-400 pl-5 py-3 flex items-center gap-3 cursor-pointer hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-all duration-200 ease-in-out">
+<span class="material-symbols-outlined text-[20px]">query_stats</span>
+<span class="font-body text-sm tracking-wide">Explorer</span>
+</div>
+<div class="text-slate-500 dark:text-slate-400 pl-5 py-3 flex items-center gap-3 cursor-pointer hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-all duration-200 ease-in-out">
+<span class="material-symbols-outlined text-[20px]">analytics</span>
+<span class="font-body text-sm tracking-wide">Reports</span>
+</div>
+</nav>
+<div class="px-5 mt-auto">
+<button class="w-full py-3 bg-primary text-on-primary font-body text-sm font-semibold rounded-xl flex items-center justify-center gap-2 shadow-lg hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-sm">add</span>
+                New Analysis
+            </button>
+<div class="mt-8 space-y-2 border-t border-outline-variant/20 pt-6">
+<div class="text-slate-500 dark:text-slate-400 pl-2 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-200/50 transition-all">
+<span class="material-symbols-outlined text-[20px]">help_outline</span>
+<span class="font-body text-sm">Help</span>
+</div>
+<div class="text-slate-500 dark:text-slate-400 pl-2 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-200/50 transition-all">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+<span class="font-body text-sm">Logout</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="w-full h-16 flex justify-between items-center px-8 border-b border-slate-200/50 dark:border-slate-800/50 bg-[#f7f9fb] dark:bg-slate-950 sticky top-0 z-40">
+<div class="flex items-center gap-4">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
+<input class="bg-surface-container border-none rounded-full pl-10 pr-4 py-1.5 text-sm w-64 focus:ring-1 focus:ring-tertiary transition-all" placeholder="Search insights..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-slate-500 hover:text-slate-900 cursor-pointer transition-colors" title="notifications">notifications</span>
+<span class="material-symbols-outlined text-slate-500 hover:text-slate-900 cursor-pointer transition-colors" title="settings">settings</span>
+</div>
+<div class="h-8 w-[1px] bg-outline-variant/30"></div>
+<div class="flex items-center gap-3 cursor-pointer active:opacity-70 group">
+<div class="text-right hidden lg:block">
+<p class="text-xs font-bold text-slate-900 leading-tight">Julian Thorne</p>
+<p class="text-[10px] text-on-surface-variant font-label uppercase tracking-wider">Chief Editor</p>
+</div>
+<img alt="User profile avatar" class="w-8 h-8 rounded-full border border-outline-variant/20" data-alt="professional portrait of a middle-aged creative director with a minimalist grey studio background and soft key lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsE857KgwXUAPTpFJ5I6CE5LC-vQUi15vw0oScGOfbrWGvrJaPQHMZKi-Ng21hxpewtKTgwlqj9Nv2t2ZeTPyS2uLUjlcU-y2UxCSNtc3MfhOt0oowYzBgh-094FwNkFPp631SlyJSCk_edLpwe4WKnNpBdL-kcv45CoCmX3zCTDK3r7wOAmo7O5WYrre6xLKuTUfKG18dM20Ud80nxX-vpD-0r6gnVrTuI2-KlsQRyZHWKilFo7faDL6QO8rz4URon84F4WjUwzk"/>
+</div>
+</div>
+</header>
+<!-- Dashboard Canvas -->
+<div class="p-10 space-y-10">
+<!-- Page Header -->
+<div class="flex justify-between items-end">
+<div>
+<h2 class="text-3xl font-headline font-extrabold tracking-tight text-on-surface">Executive Overview</h2>
+<p class="text-on-surface-variant mt-1 font-body text-sm">Real-time performance metrics for Q3 Editorial Pipeline.</p>
+</div>
+<div class="flex gap-2">
+<button class="px-4 py-2 bg-surface-container text-on-surface text-xs font-semibold rounded-lg flex items-center gap-2 hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+                        Last 30 Days
+                    </button>
+<button class="px-4 py-2 bg-primary text-on-primary text-xs font-semibold rounded-lg flex items-center gap-2 hover:opacity-90 shadow-md">
+<span class="material-symbols-outlined text-sm">download</span>
+                        Export PDF
+                    </button>
+</div>
+</div>
+<!-- KPI Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- KPI 1: Active Users -->
+<div class="bg-surface-container-lowest p-6 rounded-xl relative overflow-hidden group border border-outline-variant/10">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-secondary-container rounded-lg">
+<span class="material-symbols-outlined text-on-secondary-container">group</span>
+</div>
+<span class="text-xs font-bold text-green-600 flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">trending_up</span>
+                            +12.4%
+                        </span>
+</div>
+<p class="text-xs font-label uppercase tracking-widest text-on-surface-variant">Total Active Users</p>
+<h3 class="text-4xl font-headline font-bold mt-2">18,402</h3>
+<div class="mt-4 h-1 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-tertiary-fixed-dim w-3/4"></div>
+</div>
+</div>
+<!-- KPI 2: MRR -->
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/10">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-tertiary-container rounded-lg">
+<span class="material-symbols-outlined text-tertiary-fixed">payments</span>
+</div>
+<span class="text-xs font-bold text-green-600 flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">trending_up</span>
+                            +8.1%
+                        </span>
+</div>
+<p class="text-xs font-label uppercase tracking-widest text-on-surface-variant">Monthly Recurring Revenue</p>
+<h3 class="text-4xl font-headline font-bold mt-2">$942,800</h3>
+<p class="text-[10px] text-on-surface-variant mt-3 italic">Average revenue per user: $51.23</p>
+</div>
+<!-- KPI 3: Churn Rate -->
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/10">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-error-container rounded-lg">
+<span class="material-symbols-outlined text-error">assignment_return</span>
+</div>
+<span class="text-xs font-bold text-error flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">trending_down</span>
+                            -2.1%
+                        </span>
+</div>
+<p class="text-xs font-label uppercase tracking-widest text-on-surface-variant">User Churn Rate</p>
+<h3 class="text-4xl font-headline font-bold mt-2">1.8%</h3>
+<div class="flex gap-1 mt-4">
+<div class="h-1 flex-1 bg-error rounded-full opacity-100"></div>
+<div class="h-1 flex-1 bg-surface-container rounded-full"></div>
+<div class="h-1 flex-1 bg-surface-container rounded-full"></div>
+<div class="h-1 flex-1 bg-surface-container rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Main Analytics Section (Bento Grid) -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Trend Analysis Chart -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-lowest p-8 rounded-xl border border-outline-variant/10">
+<div class="flex justify-between items-center mb-8">
+<div>
+<h4 class="text-lg font-headline font-bold">Revenue Growth vs Target</h4>
+<p class="text-xs text-on-surface-variant">Tracking organic revenue performance across primary channels.</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-3 rounded-full bg-tertiary-fixed-dim"></span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Actual</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-3 rounded-full bg-secondary"></span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Forecast</span>
+</div>
+</div>
+</div>
+<!-- Mock Line Chart -->
+<div class="h-[300px] w-full relative flex items-end justify-between px-2 group">
+<!-- Horizontal Grid Lines -->
+<div class="absolute inset-0 flex flex-col justify-between py-2 opacity-10 pointer-events-none">
+<div class="border-b border-on-surface w-full"></div>
+<div class="border-b border-on-surface w-full"></div>
+<div class="border-b border-on-surface w-full"></div>
+<div class="border-b border-on-surface w-full"></div>
+<div class="border-b border-on-surface w-full"></div>
+</div>
+<!-- Visualized Data Curve -->
+<svg class="absolute inset-0 w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 100 100">
+<!-- Forecast Line (Dashed) -->
+<path d="M0,80 Q25,60 50,55 T100,20" fill="none" stroke="#515f74" stroke-dasharray="4" stroke-width="2"></path>
+<!-- Actual Line -->
+<path d="M0,85 Q25,75 50,45 T100,10" fill="none" stroke="#4cd6ff" stroke-linecap="round" stroke-width="4"></path>
+</svg>
+<!-- X-Axis Labels -->
+<div class="absolute -bottom-8 w-full flex justify-between text-[10px] font-bold text-on-surface-variant px-2">
+<span>JAN</span><span>FEB</span><span>MAR</span><span>APR</span><span>MAY</span><span>JUN</span>
+</div>
+</div>
+</div>
+<!-- Categorical Bar Chart -->
+<div class="col-span-12 lg:col-span-4 bg-surface-container p-8 rounded-xl flex flex-col">
+<h4 class="text-lg font-headline font-bold mb-2">Category Split</h4>
+<p class="text-xs text-on-surface-variant mb-8">Performance distribution by editorial focus.</p>
+<div class="flex-1 flex items-end justify-between gap-4 px-2">
+<div class="w-full flex flex-col items-center gap-3">
+<div class="w-full bg-tertiary rounded-t-lg transition-all hover:opacity-80" style="height: 120px;"></div>
+<span class="text-[10px] font-bold text-on-surface-variant">TECH</span>
+</div>
+<div class="w-full flex flex-col items-center gap-3">
+<div class="w-full bg-tertiary rounded-t-lg transition-all hover:opacity-80" style="height: 180px;"></div>
+<span class="text-[10px] font-bold text-on-surface-variant">BIZ</span>
+</div>
+<div class="w-full flex flex-col items-center gap-3">
+<div class="w-full bg-tertiary-fixed-dim rounded-t-lg transition-all hover:opacity-80" style="height: 140px;"></div>
+<span class="text-[10px] font-bold text-on-surface-variant">LIFESTYLE</span>
+</div>
+<div class="w-full flex flex-col items-center gap-3">
+<div class="w-full bg-tertiary rounded-t-lg transition-all hover:opacity-80" style="height: 90px;"></div>
+<span class="text-[10px] font-bold text-on-surface-variant">POLITICS</span>
+</div>
+</div>
+<button class="mt-10 w-full py-2 border border-outline-variant text-[10px] font-bold uppercase tracking-widest hover:bg-surface-container-highest transition-colors">
+                        View Full Breakdown
+                    </button>
+</div>
+<!-- Data Anomalies Table -->
+<div class="col-span-12 bg-surface-container-lowest rounded-xl border border-outline-variant/10 overflow-hidden">
+<div class="p-6 border-b border-surface-container flex justify-between items-center">
+<div>
+<h4 class="text-lg font-headline font-bold">Recent Data Anomalies</h4>
+<p class="text-xs text-on-surface-variant">Auto-detected variances exceeding ±15% threshold.</p>
+</div>
+<span class="px-3 py-1 bg-error-container text-error text-[10px] font-bold rounded-full">3 UNRESOLVED</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low">
+<th class="px-6 py-4 text-[10px] font-label uppercase tracking-widest text-on-surface-variant">Source ID</th>
+<th class="px-6 py-4 text-[10px] font-label uppercase tracking-widest text-on-surface-variant">Metric Type</th>
+<th class="px-6 py-4 text-[10px] font-label uppercase tracking-widest text-on-surface-variant">Variance</th>
+<th class="px-6 py-4 text-[10px] font-label uppercase tracking-widest text-on-surface-variant">Timestamp</th>
+<th class="px-6 py-4 text-[10px] font-label uppercase tracking-widest text-on-surface-variant">Status</th>
+<th class="px-6 py-4 text-[10px] font-label uppercase tracking-widest text-on-surface-variant">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container">
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-6 py-5 text-sm font-semibold">#PX-8821</td>
+<td class="px-6 py-5 text-sm">Traffic Spike (Internal)</td>
+<td class="px-6 py-5 text-sm text-green-600 font-bold">+42.8%</td>
+<td class="px-6 py-5 text-xs text-on-surface-variant">Today, 09:12 AM</td>
+<td class="px-6 py-5">
+<span class="px-2 py-1 bg-surface-container text-[10px] font-bold rounded uppercase">Flagged</span>
+</td>
+<td class="px-6 py-5">
+<button class="text-on-tertiary-container text-xs font-bold hover:underline">Investigate</button>
+</td>
+</tr>
+<tr class="bg-surface-container-low/20 hover:bg-surface-container-low/50 transition-colors">
+<td class="px-6 py-5 text-sm font-semibold">#MRR-004</td>
+<td class="px-6 py-5 text-sm">Failed Renewals</td>
+<td class="px-6 py-5 text-sm text-error font-bold">-18.2%</td>
+<td class="px-6 py-5 text-xs text-on-surface-variant">Today, 04:45 AM</td>
+<td class="px-6 py-5">
+<span class="px-2 py-1 bg-error-container text-error text-[10px] font-bold rounded uppercase">Critical</span>
+</td>
+<td class="px-6 py-5">
+<button class="text-on-tertiary-container text-xs font-bold hover:underline">Investigate</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-6 py-5 text-sm font-semibold">#API-X99</td>
+<td class="px-6 py-5 text-sm">Latent Response Time</td>
+<td class="px-6 py-5 text-sm font-bold">+15.5%</td>
+<td class="px-6 py-5 text-xs text-on-surface-variant">Yesterday, 11:20 PM</td>
+<td class="px-6 py-5">
+<span class="px-2 py-1 bg-surface-container text-[10px] font-bold rounded uppercase">Resolved</span>
+</td>
+<td class="px-6 py-5">
+<button class="text-on-surface-variant text-xs font-bold opacity-40 cursor-not-allowed">View Log</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Contextual Insights Section -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-12">
+<div class="bg-primary text-on-primary p-10 rounded-xl relative overflow-hidden flex flex-col justify-center">
+<img class="absolute inset-0 w-full h-full object-cover opacity-20" data-alt="abstract business growth visualization with flowing blue and white lines on a dark background representating digital progress" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsnf7X7kca7scalx2AcqVLz_HQrhxJoxlhTXBI2ROQpZifRke-YdWXzQW8j5YSXAPemq9EMbVe0bfZg1wcw0Web3ftif7_1LYgdhy4J8zFbdPbDXVHhiPYx_wd5YF7vFJ79aNLEdY-c0syq9dnus3MPXj8yWIArKuVmVvc8kUC3tiWKbfj2WfgcgN9-x3VeIj5ejLWjVFEuzGyomSTKRUeu8m7N2OdncsKxERSoQeNg6QOiC1dPN_OmPZ5vI16_zpUaXy2pk9N0yw"/>
+<div class="relative z-10">
+<span class="text-[10px] font-bold uppercase tracking-[0.2em] opacity-80 mb-2 block">Prediction Engine</span>
+<h4 class="text-2xl font-headline font-bold mb-4">Quarterly Forecast: <br/>Exceeding Targets by 12%</h4>
+<p class="text-sm opacity-80 max-w-sm mb-6">Our ML model suggests that existing retention strategies will yield a $1.2M lift by fiscal year end.</p>
+<button class="px-6 py-3 bg-white text-black text-xs font-bold rounded-lg shadow-xl hover:scale-105 transition-transform">
+                            Run Full Simulation
+                        </button>
+</div>
+</div>
+<div class="bg-tertiary-fixed p-10 rounded-xl flex flex-col justify-center">
+<div class="p-3 bg-white w-fit rounded-xl mb-6 shadow-sm">
+<span class="material-symbols-outlined text-black text-3xl">psychology</span>
+</div>
+<h4 class="text-2xl font-headline font-bold text-black mb-4">Recommended Actions</h4>
+<ul class="space-y-4">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-black mt-0.5">check_circle</span>
+<span class="text-sm font-medium text-black">Audit API connections for #PX-8821 variance.</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-black mt-0.5">check_circle</span>
+<span class="text-sm font-medium text-black">Schedule retention briefing for BIZ category managers.</span>
+</li>
+<li class="flex items-start gap-3 opacity-40">
+<span class="material-symbols-outlined text-black mt-0.5">check_circle</span>
+<span class="text-sm font-medium text-black">Review Q4 editorial calendar (Complete).</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</main>
+</body></html>
